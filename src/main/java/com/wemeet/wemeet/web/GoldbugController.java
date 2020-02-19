@@ -4,11 +4,13 @@ import com.wemeet.wemeet.entity.*;
 import com.wemeet.wemeet.pojo.Bug;
 import com.wemeet.wemeet.repository.BugContentRepo;
 import com.wemeet.wemeet.repository.BugPropertyRepo;
+import com.wemeet.wemeet.util.ReturnVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,16 +35,60 @@ public class GoldbugController {
             @ApiImplicitParam(name = "userLat", value = "用户纬度", required = true, dataType = "double"),
     })
     @RequestMapping(value = "/getAroundBugs", method = RequestMethod.GET)
-    public List<BugProperty> getAroundBugs(@RequestParam double userLon, @RequestParam double userLat) {
-        return bugPropertyRepo.findByStartLongitudeBetweenAndStartLatitudeBetween
-                (userLon - 2500, userLon + 2500,
+    public List<Bug> getAroundBugs(@RequestParam double userLon, @RequestParam double userLat) {
+        List<BugProperty> bugPropertyList = bugPropertyRepo.
+                findByStartLongitudeBetweenAndStartLatitudeBetween(
+                        userLon - 2500, userLon + 2500,
                         userLat - 2500, userLat + 2500);
+        List<Bug> bugList = new ArrayList<>();
+        for (BugProperty bugProperty : bugPropertyList) {
+            Bug bug = new Bug();
+            bug.setBugProperty(bugProperty);
+            switch (bugProperty.getBugContent().getType()) {
+                case 0:
+                    bug.setMoment((Moment) bugProperty.getBugContent());
+                    break;
+                case 1:
+                    bug.setChoiceQuestion((ChoiceQuestion) bugProperty.getBugContent());
+                    break;
+                case 2:
+                    bug.setNarrativeQuestion((NarrativeQuestion) bugProperty.getBugContent());
+                    break;
+                case 3:
+                    break;
+            }
+            bugList.add(bug);
+        }
+        return bugList;
+    }
+
+    // just for test
+    @GetMapping("/getBug/{id}")
+    public Bug getBugById(@PathVariable Long id) throws Exception {
+        Bug bug = new Bug();
+        BugProperty bugProperty = bugPropertyRepo.findById(id).orElseThrow(Exception::new);
+        bug.setBugProperty(bugProperty);
+        switch (bugProperty.getBugContent().getType()) {
+            case 0:
+                bug.setMoment((Moment) bugProperty.getBugContent());
+                break;
+            case 1:
+                bug.setChoiceQuestion((ChoiceQuestion) bugProperty.getBugContent());
+                break;
+            case 2:
+                bug.setNarrativeQuestion((NarrativeQuestion) bugProperty.getBugContent());
+                break;
+            case 3:
+                break;
+        }
+        return bug;
     }
 
     /**
      * 增加一条虫子记录
      * 不能增加BugContent
      * 只能依照已存在的BugContent加入，而且不能通过外键指定，要用BugContent的全部来指定
+     *
      * @param bugProperty 虫子的基本属性
      * @return 成功返回success
      */
@@ -50,42 +96,42 @@ public class GoldbugController {
     @ApiImplicitParam(name = "bugProperty", value = "虫子详细实体BugProperty", required = true, dataType = "BugProperty")
     @RequestMapping(value = "/addGoldBug", method = RequestMethod.POST)
     @Deprecated
-    public String addGoldBug(@RequestBody BugProperty bugProperty) {
+    public ReturnVO addGoldBug(@RequestBody BugProperty bugProperty) {
         bugPropertyRepo.save(bugProperty);
-        return "success";
+        return new ReturnVO().setCode(200).setMessage("添加成功");
     }
 
     @ApiOperation(value = "增加一条虫子内容 - 动态")
     @ApiImplicitParam(name = "bugContent", value = "虫子内容详细实体Moment", required = true, dataType = "Moment")
     @RequestMapping(value = "/addMoment", method = RequestMethod.POST)
     @Deprecated
-    public String addMoment(@RequestBody Moment bugContent) {
+    public ReturnVO addMoment(@RequestBody Moment bugContent) {
         bugContentRepo.save(bugContent);
-        return "success";
+        return new ReturnVO().setCode(200).setMessage("添加成功");
     }
 
     @ApiOperation(value = "增加一条虫子内容 - 选择题")
     @ApiImplicitParam(name = "bugContent", value = "虫子内容详细实体ChoiceQuestion", required = true, dataType = "ChoiceQuestion")
     @RequestMapping(value = "/addChoiceQuestion", method = RequestMethod.POST)
     @Deprecated
-    public String addChoiceQuestion(@RequestBody ChoiceQuestion bugContent) {
+    public ReturnVO addChoiceQuestion(@RequestBody ChoiceQuestion bugContent) {
         bugContentRepo.save(bugContent);
-        return "success";
+        return new ReturnVO().setCode(200).setMessage("添加成功");
     }
 
     @ApiOperation(value = "增加一条虫子内容 - 叙述题")
     @ApiImplicitParam(name = "bugContent", value = "虫子内容详细实体NarrativeQuestion", required = true, dataType = "NarrativeQuestion")
     @RequestMapping(value = "/addNarrativeQuestion", method = RequestMethod.POST)
     @Deprecated
-    public String addNarrativeQuestion(@RequestBody NarrativeQuestion bugContent) {
+    public ReturnVO addNarrativeQuestion(@RequestBody NarrativeQuestion bugContent) {
         bugContentRepo.save(bugContent);
-        return "success";
+        return new ReturnVO().setCode(200).setMessage("添加成功");
     }
 
     @ApiOperation(value = "增加一个包含内容的虫子")
     @ApiImplicitParam(name = "bug", value = "包含内容的虫子详细实体bug", required = true, dataType = "Bug")
     @PostMapping("/addBug")
-    public String addBug(@RequestBody Bug bug) {
+    public ReturnVO addBug(@RequestBody Bug bug) {
         BugContent bugContent;
         if (bug.getMoment() != null) {
             bugContent = bug.getMoment();
@@ -96,12 +142,13 @@ public class GoldbugController {
         } else {
             bugContent = null;
         }
+        assert bugContent != null;
         bugContentRepo.save(bugContent);
 
         BugProperty bugProperty = bug.getBugProperty();
         bugProperty.setBugContent(bugContent);
         bugPropertyRepo.save(bugProperty);
 
-        return "success";
+        return new ReturnVO().setCode(200).setMessage("添加成功");
     }
 }

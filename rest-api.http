@@ -1,0 +1,89 @@
+###
+PUT http://localhost:8080/user/email/test@qq.com/score/-3
+Accept: application/json
+
+### 根据邮箱获取用户
+GET http://localhost:8080/user?email=test@qq.com
+Accept: application/json
+
+###
+PUT http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "id": 2,
+  "email": "test@qq.com",
+  "name": "test",
+  "password": "test",
+  "phone_number": null,
+  "score": 101
+}
+
+### 更新用户字段
+
+
+GET http://localhost:8080/getAroundBugs?userLon=116&userLat=39
+Accept: application/json
+
+### 批量获取周围虫子
+
+GET http://localhost:8080/getBug/4
+Accept: application/json
+
+### 获取虫子
+
+POST http://localhost:8080/addBug
+Content-Type: application/json
+
+{
+  "bugProperty": {
+    "startLongitude": 116.46,
+    "startLatitude": 39.92,
+    "movable": false,
+    "survivalTime": 24,
+    "startTime": "20191201194343",
+    "lifeCount": 10
+  },
+  "choiceQuestion": {
+    "type": 1,
+    "publishTime": "20191201194343",
+    "question": {
+      "textContent": "送分题，选A就对了！！！"
+    },
+    "choiceA": "选我",
+    "choiceB": "不，选我",
+    "choiceC": "不，快选我",
+    "choiceD": "不，快点选我",
+    "correctAnswer": "A",
+    "score": 2
+  }
+}
+
+### 增加虫子
+
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+  "email": "test@qq.com",
+  "password": "test"
+}
+
+<> 2020-01-12T021613.200.txt
+
+### 用户登陆
+
+POST http://localhost:8080/user/register
+Content-Type: application/json
+
+{
+  "name": "test",
+  "password": "test",
+  "email": "test@qq.com"
+}
+
+<> 2020-01-12T021234.200.txt
+<> 2020-01-12T021002.200.txt
+<> 2020-01-12T020916.500.json
+
+### 用户注册

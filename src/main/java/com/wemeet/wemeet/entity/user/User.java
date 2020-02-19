@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * 2019-11-27
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"phoneNumber", "email"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"phone_number", "email"}))
 @Data
 @Accessors(chain = true)
 public class User {
@@ -33,6 +34,7 @@ public class User {
      * 用于注册和登录
      */
     @NotNull
+    @Email
     private String email;
 
     /**
