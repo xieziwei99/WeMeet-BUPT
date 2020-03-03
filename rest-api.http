@@ -1,4 +1,19 @@
+### 删除用户所有约束
+GET http://localhost:8080/deleteUserCatchesBugConstraint?email=test@qq.com
+Accept: application/json
+
 ###
+### 通过用户邮箱，获取用户捕捉过的虫子
+GET http://localhost:8080/getCaughtBugsByEmail?email=test@qq.com
+Accept: application/json
+
+###
+### 根据email和bugId增加捉与被捉的约束关系
+GET http://localhost:8080/addUserCatchesBugConstraint?email=test@qq.com&bugId=3&userAnswer=A
+Accept: application/json
+
+###
+### 通过邮箱和分数修改用户
 PUT http://localhost:8080/user/email/test@qq.com/score/-3
 Accept: application/json
 
@@ -7,6 +22,7 @@ GET http://localhost:8080/user?email=test@qq.com
 Accept: application/json
 
 ###
+### 更新用户字段
 PUT http://localhost:8080/user
 Content-Type: application/json
 
@@ -19,19 +35,19 @@ Content-Type: application/json
   "score": 101
 }
 
-### 更新用户字段
+###
 
-
+### 批量获取周围虫子
 GET http://localhost:8080/getAroundBugs?userLon=116&userLat=39
 Accept: application/json
 
-### 批量获取周围虫子
-
+###
+### 获取虫子
 GET http://localhost:8080/getBug/4
 Accept: application/json
 
-### 获取虫子
-
+###
+### 增加虫子
 POST http://localhost:8080/addBug
 Content-Type: application/json
 
@@ -41,26 +57,26 @@ Content-Type: application/json
     "startLatitude": 39.92,
     "movable": false,
     "survivalTime": 24,
-    "startTime": "20191201194343",
+    "startTime": "1582268001",
     "lifeCount": 10
   },
   "choiceQuestion": {
     "type": 1,
-    "publishTime": "20191201194343",
+    "publishTime": "1582268001",
     "question": {
-      "textContent": "送分题，选A就对了！！！"
+      "textContent": "备选题"
     },
-    "choiceA": "选我",
-    "choiceB": "不，选我",
-    "choiceC": "不，快选我",
-    "choiceD": "不，快点选我",
+    "choiceA": "啊",
+    "choiceB": "啊啊",
+    "choiceC": "啊啊啊",
+    "choiceD": "啊啊啊啊",
     "correctAnswer": "A",
     "score": 2
   }
 }
 
-### 增加虫子
-
+###
+### 用户登陆
 POST http://localhost:8080/user/login
 Content-Type: application/json
 
@@ -71,19 +87,19 @@ Content-Type: application/json
 
 <> 2020-01-12T021613.200.txt
 
-### 用户登陆
-
+###
+### 用户注册
 POST http://localhost:8080/user/register
 Content-Type: application/json
 
 {
-  "name": "test",
-  "password": "test",
-  "email": "test@qq.com"
+  "name": "super",
+  "password": "super",
+  "email": "super@qq.com"
 }
 
 <> 2020-01-12T021234.200.txt
 <> 2020-01-12T021002.200.txt
 <> 2020-01-12T020916.500.json
 
-### 用户注册
+###

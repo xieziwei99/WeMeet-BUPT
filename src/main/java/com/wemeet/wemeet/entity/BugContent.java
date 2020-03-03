@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 public class BugContent {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bugContentId;
 
     /**

@@ -2,6 +2,7 @@ package com.wemeet.wemeet;
 
 import com.wemeet.wemeet.repository.BugContentRepo;
 import com.wemeet.wemeet.repository.BugPropertyRepo;
+import com.wemeet.wemeet.repository.UserRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class WemeetApplicationTests {
     private BugPropertyRepo bugPropertyRepo;
     @Autowired
     private BugContentRepo bugContentRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @Test
     public void contextLoads() {
