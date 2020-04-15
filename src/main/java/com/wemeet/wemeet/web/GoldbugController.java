@@ -70,6 +70,9 @@ public class GoldbugController {
                     break;
                 case 3:
                     break;
+                case 4:
+                    bug.setVirusPoint((VirusPoint) bugProperty.getBugContent());
+                    break;
             }
             bugList.add(bug);
         }
@@ -93,6 +96,9 @@ public class GoldbugController {
                 bug.setNarrativeQuestion((NarrativeQuestion) bugProperty.getBugContent());
                 break;
             case 3:
+                break;
+            case 4:
+                bug.setVirusPoint((VirusPoint) bugProperty.getBugContent());
                 break;
         }
         return bug;
@@ -153,6 +159,8 @@ public class GoldbugController {
             bugContent = bug.getChoiceQuestion();
         } else if (bug.getNarrativeQuestion() != null) {
             bugContent = bug.getNarrativeQuestion();
+        } else if (bug.getVirusPoint() != null) {
+            bugContent = bug.getVirusPoint();
         } else {
             bugContent = null;
         }

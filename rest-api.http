@@ -1,3 +1,25 @@
+### 增加虫子，疫情点
+POST http://localhost:8080/addBug
+Content-Type: application/json
+
+{
+  "bugProperty": {
+    "startLongitude": 116.46,
+    "startLatitude": 39.92,
+    "movable": false,
+    "survivalTime": 24,
+    "startTime": "1582268001",
+    "lifeCount": 10,
+    "restLifeCount": 10
+  },
+  "virusPoint": {
+    "type": 4,
+    "publishTime": "1582268001",
+    "description": "这里出现一个确诊病人，请大家小心"
+  }
+}
+
+###
 ### 删除用户所有约束
 GET http://localhost:8080/deleteUserCatchesBugConstraint?email=test@qq.com
 Accept: application/json
@@ -43,7 +65,7 @@ Accept: application/json
 
 ###
 ### 获取虫子
-GET http://localhost:8080/getBug/4
+GET http://localhost:8080/getBug/5
 Accept: application/json
 
 ###

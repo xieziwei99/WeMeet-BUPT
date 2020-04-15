@@ -1,9 +1,6 @@
 package com.wemeet.wemeet.pojo;
 
-import com.wemeet.wemeet.entity.BugProperty;
-import com.wemeet.wemeet.entity.ChoiceQuestion;
-import com.wemeet.wemeet.entity.Moment;
-import com.wemeet.wemeet.entity.NarrativeQuestion;
+import com.wemeet.wemeet.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +19,7 @@ public class Bug {
     private Moment moment;
     private ChoiceQuestion choiceQuestion;
     private NarrativeQuestion narrativeQuestion;
+    private VirusPoint virusPoint;
 
     @Override
     public boolean equals(Object o) {
