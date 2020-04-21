@@ -169,6 +169,8 @@ public class GoldbugController {
 
         BugProperty bugProperty = bug.getBugProperty();
         bugProperty.setBugContent(bugContent);
+        User planter = bug.getPlanter();
+        bugProperty.setPlanter(planter);
         bugPropertyRepo.save(bugProperty);
 
         return new ReturnVO().setCode(200).setMessage("添加成功");

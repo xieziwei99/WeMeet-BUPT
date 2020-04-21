@@ -1,6 +1,7 @@
 package com.wemeet.wemeet.pojo;
 
 import com.wemeet.wemeet.entity.*;
+import com.wemeet.wemeet.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class Bug {
     private ChoiceQuestion choiceQuestion;
     private NarrativeQuestion narrativeQuestion;
     private VirusPoint virusPoint;
+    private User planter;
 
     @Override
     public boolean equals(Object o) {

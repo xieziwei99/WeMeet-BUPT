@@ -6,6 +6,8 @@ Content-Type: application/json
   "bugProperty": {
     "startLongitude": 116.46,
     "startLatitude": 39.92,
+    "destLongitude": 116.46,
+    "destLatitude": 39.92,
     "movable": false,
     "survivalTime": 24,
     "startTime": "1582268001",
@@ -15,7 +17,16 @@ Content-Type: application/json
   "virusPoint": {
     "type": 4,
     "publishTime": "1582268001",
-    "description": "这里出现一个确诊病人，请大家小心"
+    "description": "这里出现一个确诊病人，请大家小心",
+    "infectious": true,
+    "wayOfInfect": "人传人，空气传播"
+  },
+  "planter": {
+    "id": 1,
+    "name": "test",
+    "password": "test",
+    "email": "test@qq.com",
+    "score": 100
   }
 }
 
