@@ -1,6 +1,7 @@
 package com.wemeet.wemeet.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wemeet.wemeet.entity.BugProperty;
 import com.wemeet.wemeet.entity.CatcherBugRecord;
 import lombok.Data;
 import lombok.ToString;
@@ -9,6 +10,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -88,4 +90,9 @@ public class User {
     public int hashCode() {
         return id.hashCode();
     }
+
+    // 一对多关系，如果指明，则一端必须用mappedBy指明多端（owner端）的对应属性名
+    // 当删除用户时，其种植的虫子都被删除
+    @OneToMany(mappedBy = "planter", cascade = CascadeType.REMOVE)
+    private List<BugProperty> plantBugs;
 }

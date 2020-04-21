@@ -26,8 +26,11 @@ public class BugProperty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bugID;
 
+    // 多对一关系，维护端在多端
+    // 当删除bug时，不应删除其种植者，所以未设置cascade属性
+    // 未设置optional，默认为true，即表示planter可以为空
     @ManyToOne
-    private User user;
+    private User planter;
 
     @NotNull
     private Double startLongitude;
