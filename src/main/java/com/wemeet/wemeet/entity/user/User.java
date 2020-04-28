@@ -94,5 +94,7 @@ public class User {
     // 一对多关系，如果指明，则一端必须用mappedBy指明多端（owner端）的对应属性名
     // 当删除用户时，其种植的虫子都被删除
     @OneToMany(mappedBy = "planter", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    @ToString.Exclude
     private List<BugProperty> plantBugs;
 }

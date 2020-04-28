@@ -7,6 +7,7 @@ import com.wemeet.wemeet.repository.BugContentRepo;
 import com.wemeet.wemeet.repository.BugPropertyRepo;
 import com.wemeet.wemeet.repository.CatcherBugRecordRepo;
 import com.wemeet.wemeet.repository.UserRepo;
+import com.wemeet.wemeet.util.ConvertUtil;
 import com.wemeet.wemeet.util.ReturnVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -54,54 +55,17 @@ public class GoldbugController {
                 findByStartLongitudeBetweenAndStartLatitudeBetween(
                         userLon - 2500, userLon + 2500,
                         userLat - 2500, userLat + 2500);
-        List<Bug> bugList = new ArrayList<>();
-        for (BugProperty bugProperty : bugPropertyList) {
-            Bug bug = new Bug();
-            bug.setBugProperty(bugProperty);
-            switch (bugProperty.getBugContent().getType()) {
-                case 0:
-                    bug.setMoment((Moment) bugProperty.getBugContent());
-                    break;
-                case 1:
-                    bug.setChoiceQuestion((ChoiceQuestion) bugProperty.getBugContent());
-                    break;
-                case 2:
-                    bug.setNarrativeQuestion((NarrativeQuestion) bugProperty.getBugContent());
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    bug.setVirusPoint((VirusPoint) bugProperty.getBugContent());
-                    break;
-            }
-            bugList.add(bug);
-        }
-        return bugList;
+        return ConvertUtil.convertBugPropertyToBug(bugPropertyList);
     }
 
     // just for test
     @GetMapping("/getBug/{id}")
     public Bug getBugById(@PathVariable Long id) throws Exception {
-        Bug bug = new Bug();
         BugProperty bugProperty = bugPropertyRepo.findById(id).orElseThrow(Exception::new);
-        bug.setBugProperty(bugProperty);
-        switch (bugProperty.getBugContent().getType()) {
-            case 0:
-                bug.setMoment((Moment) bugProperty.getBugContent());
-                break;
-            case 1:
-                bug.setChoiceQuestion((ChoiceQuestion) bugProperty.getBugContent());
-                break;
-            case 2:
-                bug.setNarrativeQuestion((NarrativeQuestion) bugProperty.getBugContent());
-                break;
-            case 3:
-                break;
-            case 4:
-                bug.setVirusPoint((VirusPoint) bugProperty.getBugContent());
-                break;
-        }
-        return bug;
+        List<BugProperty> bugPropertyList = new ArrayList<BugProperty>(){{
+            add(bugProperty);
+        }};
+        return ConvertUtil.convertBugPropertyToBug(bugPropertyList).get(0);
     }
 
     /**
