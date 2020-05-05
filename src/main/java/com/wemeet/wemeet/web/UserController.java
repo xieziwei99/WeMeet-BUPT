@@ -1,7 +1,10 @@
 package com.wemeet.wemeet.web;
 
+import com.wemeet.wemeet.entity.BugProperty;
 import com.wemeet.wemeet.entity.user.User;
+import com.wemeet.wemeet.pojo.Bug;
 import com.wemeet.wemeet.repository.UserRepo;
+import com.wemeet.wemeet.util.ConvertUtil;
 import com.wemeet.wemeet.util.ReturnVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author xieziwei99
@@ -92,5 +96,12 @@ public class UserController {
     @GetMapping
     public User getUserByEmail(@Valid @RequestParam @Email String email) {
         return userRepo.findByEmail(email);
+    }
+
+    @GetMapping("/plantBugs")
+    public List<Bug> getPlantBugsByUserEmail(@Valid @RequestParam @Email String email) {
+        User user = userRepo.findByEmail(email);
+        List<BugProperty> plantBugs = user.getPlantBugs();
+        return ConvertUtil.convertBugPropertyToBug(plantBugs);
     }
 }

@@ -106,4 +106,6 @@ public class BugProperty {
     public int hashCode() {
         return bugID.hashCode();
     }
+
+    private String address;
 }
