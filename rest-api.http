@@ -1,3 +1,14 @@
+### updateBug
+PUT http://localhost:8080/bug/2645
+Content-Type: application/json
+
+{
+  "virusPoint": {
+    "status": 2
+  }
+}
+
+###
 ### 根据 email 获取用户种植的所有虫子
 GET http://localhost:8080/user/plantBugs?email=test@qq.com
 Accept: application/json

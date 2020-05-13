@@ -177,6 +177,20 @@ public class GoldbugController {
         return new ReturnVO().setCode(200).setMessage("删除约束成功");
     }
 
+    @PutMapping("/bug/{id}")
+    public ReturnVO updateBug(@Valid @NotNull @PathVariable Long id, @RequestBody Bug bug) throws Exception {
+        Bug bugInDatabase = getBugById(id);
+        VirusPoint toVirusPoint = bug.getVirusPoint();
+        if (toVirusPoint != null) {
+            Integer toStatus = toVirusPoint.getStatus();
+            if (toStatus != null) {
+                bugInDatabase.getVirusPoint().setStatus(toStatus);
+            }
+        }
+        bugContentRepo.save(bugInDatabase.getVirusPoint());
+        return new ReturnVO().setCode(200).setMessage("success");
+    }
+
 
     // 以下3个接口均为多对多关系表为最简模式（不能额外添加属性）时的接口
 
