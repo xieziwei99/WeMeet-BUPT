@@ -8,6 +8,7 @@ import com.wemeet.wemeet.repository.BugPropertyRepo;
 import com.wemeet.wemeet.repository.CatcherBugRecordRepo;
 import com.wemeet.wemeet.repository.UserRepo;
 import com.wemeet.wemeet.util.ConvertUtil;
+import com.wemeet.wemeet.util.MathUtil;
 import com.wemeet.wemeet.util.ReturnVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -50,11 +51,13 @@ public class GoldbugController {
             @ApiImplicitParam(name = "userLat", value = "用户纬度", required = true, dataType = "double"),
     })
     @RequestMapping(value = "/getAroundBugs", method = RequestMethod.GET)
-    public List<Bug> getAroundBugs(@RequestParam double userLon, @RequestParam double userLat) {
+    public List<Bug> getAroundBugs(@RequestParam double userLon, @RequestParam double userLat, @RequestParam double meter) {
+        double longitude = MathUtil.meterToLongitude(meter);
+        double latitude = MathUtil.meterToLatitude(meter);
         List<BugProperty> bugPropertyList = bugPropertyRepo.
                 findByStartLongitudeBetweenAndStartLatitudeBetween(
-                        userLon - 2500, userLon + 2500,
-                        userLat - 2500, userLat + 2500);
+                        userLon - longitude, userLon + longitude,
+                        userLat - latitude, userLat + latitude);
         return ConvertUtil.convertBugPropertyToBug(bugPropertyList);
     }
 

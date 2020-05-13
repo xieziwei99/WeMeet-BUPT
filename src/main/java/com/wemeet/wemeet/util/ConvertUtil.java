@@ -33,6 +33,7 @@ public class ConvertUtil {
                     bug.setVirusPoint((VirusPoint) bugProperty.getBugContent());
                     break;
             }
+            bug.getBugProperty().setBugContent(null);
             bugList.add(bug);
         }
         return bugList;

@@ -86,8 +86,8 @@ Content-Type: application/json
 
 ###
 
-### 批量获取周围虫子
-GET http://localhost:8080/getAroundBugs?userLon=116&userLat=39
+### getAroundBugs 批量获取周围虫子
+GET http://localhost:8080/getAroundBugs?userLon=113.13725605773938&userLat=29.725412441381348&meter=5000
 Accept: application/json
 
 ###
