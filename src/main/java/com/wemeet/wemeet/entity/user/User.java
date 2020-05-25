@@ -97,4 +97,9 @@ public class User {
     @JsonIgnore
     @ToString.Exclude
     private List<BugProperty> plantBugs;
+
+    /**
+     * 0-普通大众，1-医生
+     */
+    private int role;
 }

@@ -55,7 +55,7 @@ public class UserController {
     }
 
     /**
-     * 至少需要提供 email 和 password 字段
+     * 至少需要提供 email 和 password 字段  + role字段
      *
      * @param user 请求登陆的用户信息
      * @return OK 或 ERROR
@@ -68,10 +68,12 @@ public class UserController {
         User userTemp = userRepo.findByEmail(user.getEmail());
         if (userTemp == null) {
             return new ReturnVO().setCode(500).setMessage("用户未注册");
-        } else if (userTemp.getPassword().equals(user.getPassword())) {
-            return new ReturnVO().setCode(200).setMessage("登录成功");
-        } else {
+        } else if (!userTemp.getPassword().equals(user.getPassword())) {
             return new ReturnVO().setCode(500).setMessage("密码错误");
+        } else if (userTemp.getRole() != user.getRole()) {
+            return new ReturnVO().setCode(500).setMessage("用户角色不匹配");
+        } else {
+            return new ReturnVO().setCode(200).setMessage("登录成功");
         }
     }
 

@@ -131,7 +131,8 @@ Content-Type: application/json
 
 {
   "email": "test@qq.com",
-  "password": "test"
+  "password": "test",
+  "role": 0
 }
 
 <> 2020-01-12T021613.200.txt
