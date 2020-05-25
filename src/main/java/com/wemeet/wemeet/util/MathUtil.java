@@ -12,9 +12,10 @@ public class MathUtil {
      * @param meter 单位是米
      * @return 单位是度
      */
-    public static double meterToLatitude(double meter) {
-        double longitude = meterToLongitude(meter) * Math.PI / 180;
-        return meter / 1000 / (111.320 * Math.cos(longitude));
+    public static double meterToLatitude(double meter, double curLat) {
+        curLat = curLat * Math.PI / 180;
+        double kilo = meter / 1000;
+        return kilo / (111.320 * Math.cos(curLat));
     }
 
     /**
@@ -24,6 +25,7 @@ public class MathUtil {
      * @return 单位是度
      */
     public static double meterToLongitude(double meter) {
-        return meter / 1000 / 110.574;
+        double kilo = meter / 1000;
+        return kilo / 110.574;
     }
 }

@@ -53,7 +53,7 @@ public class GoldbugController {
     @RequestMapping(value = "/getAroundBugs", method = RequestMethod.GET)
     public List<Bug> getAroundBugs(@RequestParam double userLon, @RequestParam double userLat, @RequestParam double meter) {
         double longitude = MathUtil.meterToLongitude(meter);
-        double latitude = MathUtil.meterToLatitude(meter);
+        double latitude = MathUtil.meterToLatitude(meter, userLat);
         List<BugProperty> bugPropertyList = bugPropertyRepo.
                 findByStartLongitudeBetweenAndStartLatitudeBetween(
                         userLon - longitude, userLon + longitude,
